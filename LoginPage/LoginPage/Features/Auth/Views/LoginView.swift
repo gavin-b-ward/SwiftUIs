@@ -12,37 +12,44 @@ struct LoginView: View {
     @State private var email = ""
     @State private var password = ""
     var body: some View {
-        VStack(spacing: 20) {
-            logoPlaceholder
+        ZStack {
+            VStack(spacing: 20) {
+                Text("Login")
+                    .font(.largeTitle)
+                    .bold()
+                    .foregroundColor(.primary)
 
-            Text("Login")
-                .font(.largeTitle)
-                .bold()
-                .foregroundColor(.primary)
+                TextField("Enter your email", text: $email)
+                    .textInputAutocapitalization(.never)
+                    .keyboardType(.emailAddress)
+                    .textContentType(.emailAddress)
+                    .padding()
+                    .background(
+                        Color(.secondarySystemGroupedBackground),
+                        in: RoundedRectangle(cornerRadius: 20)
+                    )
 
-            TextField("Enter your email", text: $email)
-                .textInputAutocapitalization(.never)
-                .keyboardType(.emailAddress)
-                .textContentType(.emailAddress)
-                .padding()
-                .background(
-                    Color(.secondarySystemGroupedBackground),
-                    in: RoundedRectangle(cornerRadius: 20)
-                )
+                SecureField("Enter your password", text: $password)
+                    .textContentType(.password)
+                    .padding()
+                    .background(
+                        Color(.secondarySystemGroupedBackground),
+                        in: RoundedRectangle(cornerRadius: 20)
+                    )
 
-            SecureField("Enter your password", text: $password)
-                .textContentType(.password)
-                .padding()
-                .background(
-                    Color(.secondarySystemGroupedBackground),
-                    in: RoundedRectangle(cornerRadius: 20)
-                )
+                socialSignInDivider
 
-            socialSignInDivider
+                socialSignInButtons
+            }
+            .padding(.horizontal, 32)
 
-            socialSignInButtons
+            VStack {
+                logoPlaceholder
+                    .padding(.top, 96)
+
+                Spacer()
+            }
         }
-        .padding(.horizontal, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemGroupedBackground))
     }
@@ -60,8 +67,6 @@ struct LoginView: View {
                 RoundedRectangle(cornerRadius: 24)
                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
             )
-            .offset(y: -32)
-            .padding(.bottom, -32)
     }
 
     private var socialSignInDivider: some View {
