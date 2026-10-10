@@ -13,6 +13,8 @@ struct LoginView: View {
     @State private var password = ""
     var body: some View {
         VStack(spacing: 20) {
+            logoPlaceholder
+
             Text("Login")
                 .font(.largeTitle)
                 .bold()
@@ -43,6 +45,21 @@ struct LoginView: View {
         .padding(.horizontal, 32)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color(.systemGroupedBackground))
+    }
+
+    private var logoPlaceholder: some View {
+        Image(systemName: "photo")
+            .font(.system(size: 36, weight: .medium))
+            .foregroundStyle(.secondary)
+            .frame(width: 96, height: 96)
+            .background(
+                Color(.secondarySystemGroupedBackground),
+                in: RoundedRectangle(cornerRadius: 24)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 24)
+                    .stroke(Color.gray.opacity(0.2), lineWidth: 1)
+            )
     }
 
     private var socialSignInDivider: some View {
