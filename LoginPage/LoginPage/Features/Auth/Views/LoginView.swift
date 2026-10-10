@@ -60,6 +60,8 @@ struct LoginView: View {
                 RoundedRectangle(cornerRadius: 24)
                     .stroke(Color.gray.opacity(0.2), lineWidth: 1)
             )
+            .offset(y: -32)
+            .padding(.bottom, -32)
     }
 
     private var socialSignInDivider: some View {
