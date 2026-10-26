@@ -1,19 +1,51 @@
-//
-//  ContentView.swift
-//  WeSplit
-//
-//  Created by gavin ward on 10/23/26.
-//
-
 import SwiftUI
 
 struct ContentView: View {
-   @State private var tapCount = 0
+    @State private var checkAmount = 0.0
+    @State private var numberOfPeople = 2
+    @State private var tipPercentage = 20
+    let tipPercentages = [10, 15, 20, 25, 0]
+    let currencyCode: String = Locale.current.currency?.identifier ?? "USD"
     
-
+    var totalPerPerson: Double {
+        let tipAmount = checkAmount * (Double(tipPercentage) / 100)
+        let checkTotal = checkAmount + tipAmount
+        return checkTotal / Double(numberOfPeople)
+    }
+    
     var body: some View {
-        Button("Tap Count: \(tapCount)") {
-            tapCount += 1
+        NavigationStack {
+            Form {
+                Section ("Enter the Bill Amount"){
+                    TextField("Amount: ", value: $checkAmount, format: .currency(code: currencyCode))
+                        .keyboardType(.decimalPad)
+                }
+                
+                Section {
+                    Picker("Number of People: ", selection: $numberOfPeople) {
+                        ForEach(2..<11) {
+                            Text($0, format: .number)
+                                .tag($0)
+                        }
+                    }
+                }
+                
+                Section ("How Much Do You Want To Tip?"){
+
+                    Picker("Tip percentage", selection: $tipPercentage) {
+                        ForEach(tipPercentages, id: \.self) {
+                            Text($0, format: .percent)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+                
+                Section {
+                    Text("Per Person Total is \(totalPerPerson, format: .currency(code: currencyCode))")
+                }
+            }
+            .navigationTitle("WeSplit")
+            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }
